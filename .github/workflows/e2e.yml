@@ -13,6 +13,8 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    permissions:
+      contents: write # required to push the Allure report to the gh-pages branch
     steps:
       - uses: actions/checkout@v4
 
@@ -44,3 +46,32 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 14
+
+      # --- Allure report → GitHub Pages (main branch runs only) ---
+
+      - name: Checkout gh-pages for Allure history
+        if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}
+        uses: actions/checkout@v4
+        continue-on-error: true # gh-pages does not exist on the very first run
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Restore Allure trend history
+        if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}
+        run: |
+          if [ -d gh-pages/history ]; then
+            cp -r gh-pages/history allure-results/history
+          fi
+
+      - name: Generate Allure report
+        if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}
+        run: npx allure generate allure-results -o allure-report --clean
+
+      - name: Deploy Allure report to GitHub Pages
+        if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-report

@@ -70,3 +70,14 @@ Nếu setup fail (sai credential, thiếu env) → Playwright tự skip toàn b�
 - **Test data**: chỉ assert trên data do test tự tạo (prefix `E2E`) — dev là môi trường dùng chung.
 - **Credential** chỉ đọc từ env (`src/config/env.ts`), không hardcode.
 - Thêm test mới: Page Object vào `src/pages/` → đăng ký fixture ở `src/fixtures/test.ts` → spec vào `tests/<module>/`.
+
+## CI & test report
+
+`.github/workflows/e2e.yml` chạy trên PR, push `main`, nightly 04:00 (giờ VN) và chạy tay (`workflow_dispatch`).
+
+Report sau mỗi run:
+
+- **Allure report (chỉ run trên `main`/nightly)** — tự deploy lên GitHub Pages, xem trực tiếp có trend history: https://anhnguyen-teencare.github.io/TeenCareWork-E2E/
+- **Playwright HTML report (mọi run)** — artifact `playwright-report` trong trang Actions run (giữ 14 ngày), tải về xem bằng `npx playwright show-report <folder>`.
+
+Xem Allure ở local: `npm run report:allure` (cần cài Java vì Allure CLI chạy trên JVM).

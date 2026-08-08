@@ -8,9 +8,10 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   // mentor-dev là môi trường dùng chung — giới hạn worker để không dồn tải
   workers: process.env.CI ? 2 : 4,
+  // allure-playwright ghi raw results vào allure-results/ — CI generate HTML rồi deploy GitHub Pages
   reporter: process.env.CI
-    ? [["github"], ["html", { open: "never" }]]
-    : [["list"], ["html", { open: "never" }]],
+    ? [["github"], ["html", { open: "never" }], ["allure-playwright"]]
+    : [["list"], ["html", { open: "never" }], ["allure-playwright"]],
   timeout: 60_000,
   expect: { timeout: 10_000 },
   use: {
