@@ -13,6 +13,9 @@ test.describe("CRM — Danh sách deal", () => {
   });
 
   test("Kanban render cột lead mới đầu tiên", async ({ dealListPage }) => {
+    // Session mới luôn mở ở table view — phải chuyển sang kanban trước
+    await dealListPage.switchToKanbanView();
+
     await expect(dealListPage.firstKanbanColumn).toBeVisible();
   });
 

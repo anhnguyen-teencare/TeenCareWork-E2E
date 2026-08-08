@@ -1,4 +1,4 @@
-# E2E test chạy trên PR, push main, nightly 04:00 (giờ VN) và chạy tay.
+# E2E tests run on PRs, pushes to main, nightly at 04:00 (VN time) and manual dispatch.
 name: E2E Tests
 
 on:
@@ -21,16 +21,16 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Cài dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: Cài browser Chromium
+      - name: Install Chromium browser
         run: npx playwright install --with-deps chromium
 
       - name: Typecheck
         run: npm run typecheck
 
-      - name: Chạy test
+      - name: Run tests
         run: npx playwright test
         env:
           E2E_BASE_URL: https://mentor-dev.teencare.co
