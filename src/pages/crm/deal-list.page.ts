@@ -21,9 +21,26 @@ export class DealListPage extends BasePage {
     this.dealCount = page.getByText(TEXT.crmDealList.dealCount);
     this.addDealButton = page.getByRole("button", { name: TEXT.crmDealList.addDealButton });
     this.firstKanbanColumn = page.locator("span.truncate", {
-      hasText: TEXT.crmDealList.firstKanbanColumn,
+      hasText: TEXT.crmDealList.newDealStage,
     });
     this.localeToggle = page.getByLabel(TEXT.crmDealList.localeToggleLabel);
+  }
+
+  /** Tìm deal theo mã/SĐT/email — search chỉ áp dụng khi nhấn Enter. */
+  async searchDeals(query: string): Promise<void> {
+    const searchBox = this.page.getByPlaceholder(TEXT.crmDealList.searchPlaceholder);
+    await searchBox.fill(query);
+    await searchBox.press("Enter");
+  }
+
+  /** Row trong table view chứa SĐT (table là view mặc định với session mới). */
+  dealRow(phone: string): Locator {
+    return this.page.getByRole("row", { name: phone });
+  }
+
+  /** Mở chi tiết deal — nút xem là icon-only không có accessible name, là button đầu tiên của row. */
+  async openDealDetail(phone: string): Promise<void> {
+    await this.dealRow(phone).getByRole("button").first().click();
   }
 
   /**

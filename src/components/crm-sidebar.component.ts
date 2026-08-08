@@ -1,6 +1,6 @@
 import type { Locator, Page } from "@playwright/test";
 
-/** Sidebar trái của module CRM (app: components/crm/CrmSidebar.tsx — item là <button> trong <aside>). */
+/** Sidebar trái của module CRM — mỗi item menu là một button trong vùng aside. */
 export class CrmSidebar {
   private readonly root: Locator;
 

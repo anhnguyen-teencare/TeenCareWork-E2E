@@ -65,7 +65,7 @@ Nếu setup fail (sai credential, thiếu env) → Playwright tự skip toàn b�
 ## Quy ước viết test
 
 - **Selector**: app không có `data-testid` — ưu tiên `getByRole` → `getByLabel` → `getByText`. Không dùng CSS class/XPath trừ khi bất khả kháng (comment rõ lý do).
-- **Text UI** đặt tại `src/data/text.ts`, đối chiếu nguyên văn từ source app — không tự bịa, không rải string trong spec.
+- **Text UI** đặt tại `src/data/text.ts`, đối chiếu nguyên văn với UI thật trên môi trường dev — không tự bịa, không rải string trong spec.
 - **Page Object chỉ chứa locator + hành động, không assert** — assertion nằm trong spec.
 - **Test data**: chỉ assert trên data do test tự tạo (prefix `E2E`) — dev là môi trường dùng chung.
 - **Credential** chỉ đọc từ env (`src/config/env.ts`), không hardcode.
