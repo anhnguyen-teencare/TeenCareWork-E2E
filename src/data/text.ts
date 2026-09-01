@@ -25,8 +25,15 @@ export const TEXT = {
     paidFullStage: "L8.2 - Khách đã thanh toán toàn bộ",
     /** Trạng thái đầu tiên của deal OB Upsell (hệ thống tự sinh sau thanh toán) */
     upsellFirstStage: "L8 New",
-    /** aria-label của cụm nút chuyển ngôn ngữ VI/EN */
-    localeToggleLabel: "Deal language",
+  },
+  /**
+   * Cụm nút VI/EN đổi ngôn ngữ toàn app trên header CRM (LanguageSwitcher).
+   * aria-label của group lẫn từng nút đều đổi theo ngôn ngữ đang chọn nên phải match cả 2 dạng.
+   */
+  languageSwitcher: {
+    group: /^(Ngôn ngữ|Language)$/,
+    vi: /^(Tiếng Việt|Vietnamese)$/,
+    en: /^(Tiếng Anh|English)$/,
   },
   crmSidebar: {
     dashboard: "Dashboard",

@@ -13,7 +13,7 @@ export class DealListPage extends BasePage {
   readonly dealCount: Locator;
   readonly addDealButton: Locator;
   readonly firstKanbanColumn: Locator;
-  private readonly localeToggle: Locator;
+  private readonly languageSwitcher: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -23,7 +23,7 @@ export class DealListPage extends BasePage {
     this.firstKanbanColumn = page.locator("span.truncate", {
       hasText: TEXT.crmDealList.newDealStage,
     });
-    this.localeToggle = page.getByLabel(TEXT.crmDealList.localeToggleLabel);
+    this.languageSwitcher = page.getByRole("group", { name: TEXT.languageSwitcher.group });
   }
 
   /** Tìm deal theo mã/SĐT/email — search chỉ áp dụng khi nhấn Enter. */
@@ -62,9 +62,8 @@ export class DealListPage extends BasePage {
     return this.page.getByRole("heading", { name: TEXT.crmDealList.heading[locale] });
   }
 
+  /** Đổi ngôn ngữ toàn app qua LanguageSwitcher trên header CRM — heading deal đổi theo. */
   async switchLocale(locale: DealLocale): Promise<void> {
-    await this.localeToggle
-      .getByRole("button", { name: locale.toUpperCase(), exact: true })
-      .click();
+    await this.languageSwitcher.getByRole("button", { name: TEXT.languageSwitcher[locale] }).click();
   }
 }
