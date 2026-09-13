@@ -49,6 +49,7 @@ npx playwright test --project=chromium-admin   # test cần session admin
 │   ├── data/text.ts            # text UI thật của app — một chỗ sửa khi app đổi wording
 │   ├── fixtures/test.ts        # fixture inject sẵn Page Object vào test
 │   ├── components/             # component object dùng chung nhiều trang (vd CRM sidebar)
+│   ├── flows/                  # helper arrange dùng chung (vd tạo sẵn deal làm nền)
 │   └── pages/                  # Page Object Model — mỗi trang một class
 └── tests/
     ├── auth.setup.ts           # login admin 1 lần / run, lưu session .auth/admin.json
@@ -67,6 +68,7 @@ Nếu setup fail (sai credential, thiếu env) → Playwright tự skip toàn b�
 - **Selector**: app không có `data-testid` — ưu tiên `getByRole` → `getByLabel` → `getByText`. Không dùng CSS class/XPath trừ khi bất khả kháng (comment rõ lý do).
 - **Text UI** đặt tại `src/data/text.ts`, đối chiếu nguyên văn với UI thật trên môi trường dev — không tự bịa, không rải string trong spec.
 - **Page Object chỉ chứa locator + hành động, không assert** — assertion nằm trong spec.
+- **`src/flows/` chỉ cho bước arrange dùng lại ở nhiều spec.** Bước nào chính là đối tượng test thì viết thẳng trong spec.
 - **Test data**: chỉ assert trên data do test tự tạo (prefix `E2E`) — dev là môi trường dùng chung.
 - **Credential** chỉ đọc từ env (`src/config/env.ts`), không hardcode.
 - Thêm test mới: Page Object vào `src/pages/` → đăng ký fixture ở `src/fixtures/test.ts` → spec vào `tests/<module>/`.

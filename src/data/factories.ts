@@ -1,7 +1,7 @@
 import { TEXT } from "./text";
 
 /**
- * Sinh test data duy nhất cho mỗi lần chạy — prefix E2E để nhận diện
+ * Test data cho CRM: hàm sinh data duy nhất cho mỗi lần chạy — prefix E2E để nhận diện
  * data do automation tạo ra trên môi trường dev.
  */
 
@@ -42,5 +42,13 @@ export function generateStudent(): StudentInput {
   };
 }
 
-/** Mã gói huấn luyện có sẵn trên môi trường dev, dùng cho test tạo đơn hàng. */
-export const TRAINING_PACKAGE_CODE = "huan_luyen_3m";
+/**
+ * Gói sản phẩm dùng cho test tạo đơn hàng.
+ * `name` chỉ dùng đặt tên test cho dễ đọc, không phải selector.
+ */
+export const TEST_PACKAGES = [
+  { code: "TC1W", name: "TeenCare 1 tuần" },
+  { code: "huan_luyen_3m", name: "Gói Huấn Luyện 3 tháng" },
+  { code: "huan_luyen_6m", name: "Gói Huấn Luyện 6 tháng" },
+  { code: "huan_luyen_12m", name: "Gói Huấn Luyện 12 tháng" },
+] as const;
