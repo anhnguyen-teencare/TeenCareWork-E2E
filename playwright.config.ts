@@ -1,5 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
-import { ADMIN_STORAGE_STATE, BASE_URL } from "./src/config/env";
+import { ADMIN_STORAGE_STATE, BASE_URL, SLOW_MO } from "./src/config/env";
 
 export default defineConfig({
   testDir: "./tests",
@@ -17,6 +17,7 @@ export default defineConfig({
   use: {
     baseURL: BASE_URL,
     locale: "vi-VN",
+    launchOptions: { slowMo: SLOW_MO },
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",

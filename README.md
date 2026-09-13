@@ -6,11 +6,13 @@ Automation test cho **TeenCareWork CRM** (https://mentor-dev.teencare.co) — [P
 
 | Phase | Nội dung | Trạng thái |
 |---|---|---|
-| 1 | Auth (login/guard) + smoke CRM Danh sách deal | ✅ Hoàn thành |
-| 2 | Tạo deal | 📝 In progress |
-| 3 | Đơn hàng + Phụ huynh/Học sinh + Thanh toán | 📝 In progress |
-| 4 | OB Upsell pipeline → OB Done | 📝 In progress |
-| 5 | Vận hành (cleanup data, tag, notify) | 📝 In progress |
+| 1 | Auth (login/guard) + smoke CRM Danh sách deal | ✅ Xong — AUTH-01→03, CRM-01→04 |
+| 2 | Tạo deal | 🔄 DEAL-01 xong · còn DEAL-02→04 |
+| 3 | Đơn hàng + Phụ huynh/Học sinh + Thanh toán | 🔄 ORD-01 + PAY-02 xong (4 gói) · còn ORD-02/03, PAY-01 |
+| 4 | OB Upsell pipeline → OB Done | 🔄 UPS-01 xong · còn UPS-02→06 |
+| 5 | Vận hành (cleanup data, tag, notify) | 📝 Chưa bắt đầu |
+
+Hiện có **13 test** (1 setup + 3 auth + 9 CRM), pass trên dev. Journey thanh toán chạy cho 4 gói: `TC1W`, `huan_luyen_3m`, `6m`, `12m`.
 
 ## Bắt đầu
 
@@ -39,6 +41,14 @@ npx playwright test --project=chromium-guest   # test đăng nhập/guard (khôn
 npx playwright test --project=chromium-admin   # test cần session admin
 ```
 
+Chạy chậm lại để quan sát — `E2E_SLOW_MO` là độ trễ (ms) chèn giữa mỗi thao tác, mặc định `0`:
+
+```bash
+E2E_SLOW_MO=500 npm run test:headed            # ưu tiên env truyền trực tiếp
+```
+
+Đặt cố định trong `.env.local` nếu muốn áp cho mọi lần chạy. Chỉ ảnh hưởng thao tác (click, fill…), không nới timeout.
+
 ## Cấu trúc
 
 ```
@@ -46,7 +56,7 @@ npx playwright test --project=chromium-admin   # test cần session admin
 ├── docs/                       # test plan, scenarios, checklist theo phase
 ├── src/
 │   ├── config/env.ts           # đọc .env.local, validate fail-fast
-│   ├── data/text.ts            # text UI thật của app — một chỗ sửa khi app đổi wording
+│   ├── data/                   # text.ts (text UI thật của app) + factories.ts (sinh test data)
 │   ├── fixtures/test.ts        # fixture inject sẵn Page Object vào test
 │   ├── components/             # component object dùng chung nhiều trang (vd CRM sidebar)
 │   ├── flows/                  # helper arrange dùng chung (vd tạo sẵn deal làm nền)

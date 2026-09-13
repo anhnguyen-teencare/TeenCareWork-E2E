@@ -8,6 +8,8 @@ dotenv.config({ path: [path.join(rootDir, ".env.local"), path.join(rootDir, ".en
 
 export const BASE_URL = process.env.E2E_BASE_URL ?? "https://mentor-dev.teencare.co";
 
+export const SLOW_MO = Number(process.env.E2E_SLOW_MO) || 0;
+
 /** File session sinh bởi tests/auth.setup.ts — các project khai báo storageState sẽ tái dùng. */
 export const ADMIN_STORAGE_STATE = path.join(rootDir, ".auth/admin.json");
 
